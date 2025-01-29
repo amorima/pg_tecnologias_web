@@ -76,9 +76,9 @@ body {
 /* Responsividade do main */
 @media (min-width: 992px) {
   main {
-    margin-left: 240px;
-    margin-top: 56px;
-    padding: 20px;
+    margin-left: 240px !important;
+    margin-top: 56px !important;
+    padding: 20px !important;
   }
 }
 @media (max-width: 991.98px) {
