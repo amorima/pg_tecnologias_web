@@ -3,24 +3,16 @@
 <head>
   <meta charset="UTF-8"/>
   <title>Gestão Académica - Login Estudante/Professor</title>
-  <!-- Metadados relevantes -->
-  <meta name="author" content="Antonio Amorim (40240119), Gabriel Paiva (40240137), Henrique Reis (40240132)">
-  <meta name="keywords" content="ESMAD, TSIW, Ensino Superior, DOMUS, TW">
-
-  <!-- Ícone do site (Favicon) -->
   <link rel="icon" type="image/x-icon" href="/img/favicon.ico" />
-
   <!-- Bootstrap CSS -->
   <link
     href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
     rel="stylesheet"
   />
-  <!-- Ícones do Bootstrap -->
   <link
     rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
   />
-  <!-- Folha de estilo principal -->
   <link rel="stylesheet" href="css/main.css" />
 </head>
 <body class="bg-light d-flex align-items-center justify-content-center vh-100">
@@ -30,14 +22,12 @@
     <div class="col-md-5">
       <div class="card shadow">
         <div class="card-body p-4">
-          <!-- Imagem do logótipo -->
           <div class="text-center mb-3">
-            <img id="logo-porto" src="img/logo-porto.png" alt="Logótipo do Politécnico do Porto" />
+            <img id="logo-porto" src="img/logo-porto.png" alt="Logo Porto" />
           </div>
-
           <h3 class="text-center mb-4">Login - Estudante/Professor</h3>
 
-          <!-- Formulário de Login -->
+          <!-- Form de Login -->
           <form id="loginForm">
             <div class="mb-3">
               <label for="email" class="form-label">Email</label>
@@ -71,12 +61,11 @@
             </small>
           </div>
 
-          <!-- Link para o login de administrador -->
           <div class="text-center mt-3">
             <a href="admin_login.html" class="text-decoration-none">Login Admin</a>
           </div>
 
-          <!-- Modal Escolher Papel (Estudante ou Docente) -->
+          <!-- Modal Escolher Role (Estudante ou Docente) -->
           <div
             class="modal fade"
             id="chooseRoleModal"
@@ -94,7 +83,6 @@
                   ></button>
                 </div>
                 <div class="modal-body d-flex justify-content-around">
-                  <!-- Botão registo Estudante -->
                   <button
                     class="btn btn-esmad"
                     data-bs-toggle="modal"
@@ -102,7 +90,6 @@
                   >
                     Estudante
                   </button>
-                  <!-- Botão registo Docente -->
                   <button
                     class="btn btn-secondary"
                     data-bs-toggle="modal"
@@ -166,7 +153,7 @@
                     <div class="mb-3">
                       <label for="studentCourse" class="form-label">Curso</label>
                       <select class="form-select" id="studentCourse" required>
-                        <!-- Carregado via JS (cursos disponíveis) -->
+                        <!-- via JS -->
                       </select>
                     </div>
                     <button type="submit" class="btn btn-esmad w-100">
@@ -231,7 +218,7 @@
                         >Disciplina</label
                       >
                       <select class="form-select" id="teacherSubject" required>
-                        <!-- Carregado via JS (disciplinas disponíveis) -->
+                        <!-- via JS -->
                       </select>
                     </div>
                     <button type="submit" class="btn btn-esmad w-100">
@@ -242,7 +229,7 @@
               </div>
             </div>
           </div>
-          <!-- Fim dos Modais -->
+          <!-- Fim Modals -->
 
         </div>
       </div>
@@ -250,19 +237,18 @@
   </div>
 </div>
 
-<!-- Bootstrap JS (depende de Popper) -->
+<!-- Bootstrap JS -->
 <script
   src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
 ></script>
-
-<!-- Script principal do sistema -->
+<!-- Script Principal -->
 <script src="js/script.js"></script>
 <script>
-  // Configuração dos dropdowns de Curso e Disciplina
+  // Carregar combos de curso/disciplinas
   const studentCourseSelect = document.getElementById('studentCourse');
   const teacherSubjectSelect = document.getElementById('teacherSubject');
 
-  // Ao abrir o modal de registo de Estudante, popular o select com os cursos
+  // Ao abrir modais, popular
   const studentModal = document.getElementById('registerStudentModal');
   studentModal.addEventListener('show.bs.modal', () => {
     studentCourseSelect.innerHTML = '';
@@ -275,7 +261,6 @@
     });
   });
 
-  // Ao abrir o modal de registo de Docente, popular o select com as disciplinas
   const teacherModal = document.getElementById('registerTeacherModal');
   teacherModal.addEventListener('show.bs.modal', () => {
     teacherSubjectSelect.innerHTML = '';
@@ -288,13 +273,13 @@
     });
   });
 
-  // Submeter formulário de Login
+  // Login
   document.getElementById('loginForm').addEventListener('submit', function(e){
     e.preventDefault();
     const email = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value.trim();
     if (!email || !password) {
-      alert('Por favor, preencha o email e a palavra-passe.');
+      alert('Por favor, preencha email e password.');
       return;
     }
     const result = login(email, password);
@@ -302,13 +287,12 @@
       alert(result.message || 'Credenciais inválidas!');
       return;
     }
-    // Se for admin, avisar para usar o login de admin
+    // Se for admin, não permitimos por aqui
     if (result.role === 'admin') {
-      alert('Por favor, utilize o login de administrador em "Login Admin".');
+      alert('Use o login de admin separado.');
       clearLoggedUser();
       return;
     }
-    // Guardar sessão e redirecionar consoante o papel
     setLoggedUser(result.userId, result.role);
     if (result.role === 'teacher') {
       window.location.href = 'teachers_dashboard.html';
@@ -317,7 +301,7 @@
     }
   });
 
-  // Submeter formulário de registo de Estudante
+  // Registo Estudante
   document.getElementById('studentRegisterForm').addEventListener('submit', function(e){
     e.preventDefault();
     const name = document.getElementById('studentName').value.trim();
@@ -336,7 +320,7 @@
     modalObj.hide();
   });
 
-  // Submeter formulário de registo de Docente
+  // Registo Professor
   document.getElementById('teacherRegisterForm').addEventListener('submit', function(e){
     e.preventDefault();
     const name = document.getElementById('teacherName').value.trim();
