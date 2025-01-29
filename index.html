@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Gestão Académica - Login Estudante/Professor</title>
+  <!-- Metadados relevantes -->
+  <meta name="author" content="Antonio Amorim (40240119), Gabriel Paiva (40240137), Henrique Reis (40240132)">
+  <meta name="keywords" content="ESMAD, TSIW, Ensino Superior, DOMUS, TW">
+
+  <!-- Ícone do site (Favicon) -->
+  <link rel="icon" type="image/x-icon" href="/img/favicon.ico" />
+
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <!-- Ícones do Bootstrap -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+  />
+  <!-- Folha de estilo principal -->
+  <link rel="stylesheet" href="css/main.css" />
+</head>
+<body class="bg-light d-flex align-items-center justify-content-center vh-100">
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-5">
+      <div class="card shadow">
+        <div class="card-body p-4">
+          <!-- Imagem do logótipo -->
+          <div class="text-center mb-3">
+            <img id="logo-porto" src="img/logo-porto.png" alt="Logótipo do Politécnico do Porto" />
+          </div>
+
+          <h3 class="text-center mb-4">Login - Estudante/Professor</h3>
+
+          <!-- Formulário de Login -->
+          <form id="loginForm">
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                placeholder="nome@exemplo.com"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Palavra-passe</label>
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                placeholder="********"
+              />
+            </div>
+            <button type="submit" class="btn btn-esmad w-100">
+              Entrar
+            </button>
+          </form>
+
+          <div class="text-center mt-3">
+            <small class="text-muted">
+              Ainda não tens conta?
+              <a href="#" data-bs-toggle="modal" data-bs-target="#chooseRoleModal"
+                >Regista-te</a
+              >
+            </small>
+          </div>
+
+          <!-- Link para o login de administrador -->
+          <div class="text-center mt-3">
+            <a href="admin_login.html" class="text-decoration-none">Login Admin</a>
+          </div>
+
+          <!-- Modal Escolher Papel (Estudante ou Docente) -->
+          <div
+            class="modal fade"
+            id="chooseRoleModal"
+            tabindex="-1"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Tipo de Registo</h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                  ></button>
+                </div>
+                <div class="modal-body d-flex justify-content-around">
+                  <!-- Botão registo Estudante -->
+                  <button
+                    class="btn btn-esmad"
+                    data-bs-toggle="modal"
+                    data-bs-target="#registerStudentModal"
+                  >
+                    Estudante
+                  </button>
+                  <!-- Botão registo Docente -->
+                  <button
+                    class="btn btn-secondary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#registerTeacherModal"
+                  >
+                    Docente
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Modal Registo Estudante -->
+          <div
+            class="modal fade"
+            id="registerStudentModal"
+            tabindex="-1"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Registo de Estudante</h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <form id="studentRegisterForm">
+                    <div class="mb-3">
+                      <label for="studentName" class="form-label">Nome</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="studentName"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="studentEmail" class="form-label">Email</label>
+                      <input
+                        type="email"
+                        class="form-control"
+                        id="studentEmail"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="studentPassword" class="form-label"
+                        >Palavra-passe</label
+                      >
+                      <input
+                        type="password"
+                        class="form-control"
+                        id="studentPassword"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="studentCourse" class="form-label">Curso</label>
+                      <select class="form-select" id="studentCourse" required>
+                        <!-- Carregado via JS (cursos disponíveis) -->
+                      </select>
+                    </div>
+                    <button type="submit" class="btn btn-esmad w-100">
+                      Registar
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Modal Registo Docente -->
+          <div
+            class="modal fade"
+            id="registerTeacherModal"
+            tabindex="-1"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Registo de Docente</h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <form id="teacherRegisterForm">
+                    <div class="mb-3">
+                      <label for="teacherName" class="form-label">Nome</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="teacherName"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="teacherEmail" class="form-label">Email</label>
+                      <input
+                        type="email"
+                        class="form-control"
+                        id="teacherEmail"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="teacherPassword" class="form-label"
+                        >Palavra-passe</label
+                      >
+                      <input
+                        type="password"
+                        class="form-control"
+                        id="teacherPassword"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="teacherSubject" class="form-label"
+                        >Disciplina</label
+                      >
+                      <select class="form-select" id="teacherSubject" required>
+                        <!-- Carregado via JS (disciplinas disponíveis) -->
+                      </select>
+                    </div>
+                    <button type="submit" class="btn btn-esmad w-100">
+                      Registar
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Fim dos Modais -->
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap JS (depende de Popper) -->
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+></script>
+
+<!-- Script principal do sistema -->
+<script src="js/script.js"></script>
+<script>
+  // Configuração dos dropdowns de Curso e Disciplina
+  const studentCourseSelect = document.getElementById('studentCourse');
+  const teacherSubjectSelect = document.getElementById('teacherSubject');
+
+  // Ao abrir o modal de registo de Estudante, popular o select com os cursos
+  const studentModal = document.getElementById('registerStudentModal');
+  studentModal.addEventListener('show.bs.modal', () => {
+    studentCourseSelect.innerHTML = '';
+    const courses = getCoursesList();
+    courses.forEach(c => {
+      const opt = document.createElement('option');
+      opt.value = c;
+      opt.textContent = c;
+      studentCourseSelect.appendChild(opt);
+    });
+  });
+
+  // Ao abrir o modal de registo de Docente, popular o select com as disciplinas
+  const teacherModal = document.getElementById('registerTeacherModal');
+  teacherModal.addEventListener('show.bs.modal', () => {
+    teacherSubjectSelect.innerHTML = '';
+    const subs = getSubjectsList();
+    subs.forEach(s => {
+      const opt = document.createElement('option');
+      opt.value = s;
+      opt.textContent = s;
+      teacherSubjectSelect.appendChild(opt);
+    });
+  });
+
+  // Submeter formulário de Login
+  document.getElementById('loginForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
+    if (!email || !password) {
+      alert('Por favor, preencha o email e a palavra-passe.');
+      return;
+    }
+    const result = login(email, password);
+    if (!result.success) {
+      alert(result.message || 'Credenciais inválidas!');
+      return;
+    }
+    // Se for admin, avisar para usar o login de admin
+    if (result.role === 'admin') {
+      alert('Por favor, utilize o login de administrador em "Login Admin".');
+      clearLoggedUser();
+      return;
+    }
+    // Guardar sessão e redirecionar consoante o papel
+    setLoggedUser(result.userId, result.role);
+    if (result.role === 'teacher') {
+      window.location.href = 'teachers_dashboard.html';
+    } else {
+      window.location.href = 'students_dashboard.html';
+    }
+  });
+
+  // Submeter formulário de registo de Estudante
+  document.getElementById('studentRegisterForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const name = document.getElementById('studentName').value.trim();
+    const email = document.getElementById('studentEmail').value.trim();
+    const password = document.getElementById('studentPassword').value.trim();
+    const course = document.getElementById('studentCourse').value;
+
+    const r = registerStudent({ name, email, password, course });
+    if (!r.success) {
+      alert(r.message);
+      return;
+    }
+    alert(r.message);
+    this.reset();
+    const modalObj = bootstrap.Modal.getInstance(studentModal);
+    modalObj.hide();
+  });
+
+  // Submeter formulário de registo de Docente
+  document.getElementById('teacherRegisterForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const name = document.getElementById('teacherName').value.trim();
+    const email = document.getElementById('teacherEmail').value.trim();
+    const password = document.getElementById('teacherPassword').value.trim();
+    const subject = document.getElementById('teacherSubject').value;
+
+    const r = registerTeacher({ name, email, password, subject });
+    if (!r.success) {
+      alert(r.message);
+      return;
+    }
+    alert(r.message);
+    this.reset();
+    const modalObj = bootstrap.Modal.getInstance(teacherModal);
+    modalObj.hide();
+  });
+</script>
+</body>
+</html>

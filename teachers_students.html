@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <title>Docente - Estudantes</title>
+  <meta name="author" content="Antonio Amorim (40240119), Gabriel Paiva (40240137), Henrique Reis (40240132)">
+  <meta name="keywords" content="ESMAD, TSIW, Ensino Superior, DOMUS, TW">
+  <link rel="icon" type="image/x-icon" href="/img/favicon.ico" />
+
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <!-- Bootstrap Icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+  />
+  <!-- Stylesheet principal -->
+  <link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+  <!-- Navbar unificada -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container-fluid d-flex justify-content-between">
+      <!-- Botão offcanvas (telas pequenas) -->
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#sidebarOffcanvas"
+      >
+        <i class="bi bi-justify"></i>
+      </button>
+      <div class="d-flex align-items-center">
+        <img id="logo-porto" src="img/logo-porto.png" alt="Logótipo do Politécnico do Porto" />
+      </div>
+      <div class="d-flex align-items-center">
+        <div class="dropdown me-3">
+          <a
+            class="text-reset dropdown-toggle hidden-arrow"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <i class="bi bi-bell fs-4" style="text-decoration:none;"></i>
+            <span
+              id="notifBadge"
+              class="badge bg-danger rounded-pill"
+              style="display:none;"
+            >0</span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" id="notifDropdown">
+            <!-- Notificações via JS -->
+          </ul>
+        </div>
+        <div class="dropdown">
+          <a
+            class="dropdown-toggle d-flex align-items-center hidden-arrow text-white"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <img
+              src="img/avatar.jpg"
+              alt="Avatar do utilizador"
+              id="headerAvatar"
+              class="header-avatar"
+            />
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <a class="dropdown-item" href="teachers_profile.html">Meu Perfil</a>
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <a
+                class="dropdown-item text-danger"
+                href="index.html"
+                onclick="clearLoggedUser()"
+              >
+                Sair
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Offcanvas (sidebar) para ecrãs < lg -->
+  <div
+    class="offcanvas offcanvas-start d-lg-none offcanvas-side"
+    tabindex="-1"
+    id="sidebarOffcanvas"
+  >
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title">Menu Professor</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+      <div class="list-group">
+        <a
+          href="teachers_dashboard.html"
+          class="list-group-item list-group-item-action"
+        >
+          <i class="bi bi-speedometer2 me-3"></i>Dashboard
+        </a>
+        <a
+          href="teachers_students.html"
+          class="list-group-item list-group-item-action active"
+        >
+          <i class="bi bi-people me-3"></i>Estudantes
+        </a>
+        <a
+          href="teachers_schedule.html"
+          class="list-group-item list-group-item-action"
+        >
+          <i class="bi bi-calendar-week me-3"></i>Horários
+        </a>
+        <a
+          href="teachers_statistics.html"
+          class="list-group-item list-group-item-action"
+        >
+          <i class="bi bi-bar-chart me-3"></i>Estatísticas
+        </a>
+        <a
+          href="teachers_profile.html"
+          class="list-group-item list-group-item-action"
+        >
+          <i class="bi bi-person-circle me-3"></i>Meu Perfil
+        </a>
+        <hr />
+        <a
+          href="index.html"
+          class="list-group-item list-group-item-action text-danger"
+          onclick="clearLoggedUser()"
+        >
+          <i class="bi bi-box-arrow-left me-3"></i>Sair
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sidebar fixa em ecrãs >= lg -->
+  <div class="sidebar-fixed d-none d-lg-block">
+    <div class="mx-3 mt-4">
+      <div class="list-group">
+        <a
+          href="teachers_dashboard.html"
+          class="list-group-item list-group-item-action"
+        >
+          <i class="bi bi-speedometer2 me-3"></i>Dashboard
+        </a>
+        <a
+          href="teachers_students.html"
+          class="list-group-item list-group-item-action active"
+        >
+          <i class="bi bi-people me-3"></i>Estudantes
+        </a>
+        <a
+          href="teachers_schedule.html"
+          class="list-group-item list-group-item-action"
+        >
+          <i class="bi bi-calendar-week me-3"></i>Horários
+        </a>
+        <a
+          href="teachers_statistics.html"
+          class="list-group-item list-group-item-action"
+        >
+          <i class="bi bi-bar-chart me-3"></i>Estatísticas
+        </a>
+        <a
+          href="teachers_profile.html"
+          class="list-group-item list-group-item-action"
+        >
+          <i class="bi bi-person-circle me-3"></i>Meu Perfil
+        </a>
+        <hr />
+        <a
+          href="index.html"
+          class="list-group-item list-group-item-action text-danger"
+          onclick="clearLoggedUser()"
+        >
+          <i class="bi bi-box-arrow-left me-3"></i>Sair
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <div class="container mt-3">
+      <h2>Lista de Estudantes</h2>
+      <input
+        type="text"
+        class="form-control w-25 mb-3"
+        id="searchInput"
+        placeholder="Pesquisar por nome..."
+      />
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Curso</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="studentsTbody">
+          <!-- Preenchido via JS -->
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- Modal Atribuir Nota -->
+  <div class="modal fade" id="gradeModal" tabindex="-1">
+    <div class="modal-dialog">
+      <form id="gradeForm" class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Atribuir Nota</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="gradeStudentId" />
+          <div class="mb-3">
+            <label class="form-label">Disciplina (do professor)</label>
+            <input type="text" class="form-control" id="gradeSubject" readonly />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Momento de Avaliação</label>
+            <input type="text" class="form-control" id="gradeEvaluation" required />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Nota</label>
+            <input
+              type="number"
+              class="form-control"
+              id="gradeValue"
+              min="0"
+              max="20"
+              required
+            />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button class="btn btn-esmad" type="submit">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Ver/Remover Notas -->
+  <div class="modal fade" id="manageGradesModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Notas do Estudante</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Disciplina</th>
+                <th>Momento</th>
+                <th>Nota</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="manageGradesTbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/script.js"></script>
+  <script>
+    let fullList = [];
+    let currentTeacher = null;
+
+    (function(){
+      // Verificar se o utilizador é docente
+      const user = getLoggedUser();
+      if (!user.id || user.role !== 'teacher') {
+        alert('Acesso negado! Faça login como docente.');
+        window.location.href = 'index.html';
+        return;
+      }
+      currentTeacher = getTeacherById(user.id);
+      if (!currentTeacher) {
+        alert('Professor não encontrado ou não aprovado!');
+        window.location.href = 'index.html';
+        return;
+      }
+
+      // Avatar no cabeçalho
+      const headerAvatar = document.getElementById('headerAvatar');
+      if (currentTeacher.profilePicture) {
+        headerAvatar.src = currentTeacher.profilePicture;
+      } else {
+        headerAvatar.src = 'img/avatar.jpg';
+      }
+
+      // Notificações
+      const notifs = readNotifications(user.id);
+      const unread = notifs.filter(n => !n.read);
+      if (unread.length > 0) {
+        const nb = document.getElementById('notifBadge');
+        nb.style.display = 'inline-block';
+        nb.textContent = unread.length;
+      }
+      const dd = document.getElementById('notifDropdown');
+      notifs.forEach(n => {
+        const li = document.createElement('li');
+        li.innerHTML = `<a class="dropdown-item ${n.read ? '' : 'fw-bold'}" href="#">${n.message}</a>`;
+        li.onclick = () => {
+          markNotificationAsRead(n.id);
+          window.location.reload();
+        };
+        dd.appendChild(li);
+      });
+
+      // Carregar todos os estudantes
+      fullList = readAllStudents();
+      renderStudents(fullList);
+
+      // Filtro de pesquisa
+      document.getElementById('searchInput').addEventListener('keyup', function(){
+        const txt = this.value.toLowerCase();
+        const filtered = fullList.filter(s => s.name.toLowerCase().includes(txt));
+        renderStudents(filtered);
+      });
+    })();
+
+    function renderStudents(list) {
+      const tbody = document.getElementById('studentsTbody');
+      tbody.innerHTML = '';
+      list.forEach(st => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${st.id}</td>
+          <td>${st.name}</td>
+          <td>${st.course}</td>
+          <td>
+            <button class="btn btn-sm btn-primary me-1" onclick="openGradeModal(${st.id})">
+              <i class="bi bi-journal-text"></i> Nota
+            </button>
+            <button class="btn btn-sm btn-warning" onclick="openManageGradesModal(${st.id})">
+              <i class="bi bi-list-check"></i> Ver/Remover
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Modal para atribuir nota
+    function openGradeModal(studentId) {
+      document.getElementById('gradeStudentId').value = studentId;
+      document.getElementById('gradeSubject').value = currentTeacher.subject;
+      document.getElementById('gradeEvaluation').value = '';
+      document.getElementById('gradeValue').value = '';
+      const modal = new bootstrap.Modal(document.getElementById('gradeModal'));
+      modal.show();
+    }
+    window.openGradeModal = openGradeModal;
+
+    // Submeter atribuição de nota
+    document.getElementById('gradeForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      const studentId = document.getElementById('gradeStudentId').value;
+      const subject = document.getElementById('gradeSubject').value.trim();
+      const evaluation = document.getElementById('gradeEvaluation').value.trim();
+      const grade = document.getElementById('gradeValue').value.trim();
+      if (!evaluation || !grade) {
+        alert('Preencha todos os campos!');
+        return;
+      }
+      createGrade({ studentId, subject, evaluation, grade });
+      alert('Nota atribuída!');
+      const m = bootstrap.Modal.getInstance(document.getElementById('gradeModal'));
+      m.hide();
+    });
+
+    // Modal para gerir notas (ver/remover)
+    function openManageGradesModal(studentId) {
+      const container = document.getElementById('manageGradesTbody');
+      container.innerHTML = '';
+      // Filtrar notas do estudante nesta disciplina do professor
+      const all = readAllGrades();
+      const filtered = all.filter(g => g.studentId === Number(studentId) && g.subject === currentTeacher.subject);
+
+      filtered.forEach(g => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${g.subject}</td>
+          <td>${g.evaluation}</td>
+          <td>${g.grade}</td>
+          <td>
+            <button class="btn btn-sm btn-danger" onclick="removeGrade(${g.id})">X</button>
+          </td>
+        `;
+        container.appendChild(tr);
+      });
+      const mm = new bootstrap.Modal(document.getElementById('manageGradesModal'));
+      mm.show();
+    }
+    window.openManageGradesModal = openManageGradesModal;
+
+    // Remover nota
+    function removeGrade(gradeId) {
+      if (!confirm('Deseja remover esta nota?')) return;
+      deleteGrade(gradeId);
+      // Remover da tabela
+      const container = document.getElementById('manageGradesTbody');
+      const rows = Array.from(container.querySelectorAll('tr'));
+      rows.forEach(r => {
+        if (r.innerHTML.includes(`removeGrade(${gradeId})`)) {
+          r.remove();
+        }
+      });
+    }
+    window.removeGrade = removeGrade;
+  </script>
+</body>
+</html>

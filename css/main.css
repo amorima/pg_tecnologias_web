@@ -1,0 +1,110 @@
+/* css/main.css */
+
+/* Reset e tipografia */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto", sans-serif;
+  background-color: #f9f9f9;
+}
+
+/* Accent color #ff6600 */
+:root {
+  --accent-color: #ff6600;
+}
+
+/* Navbar principal */
+.navbar {
+  background-color: var(--accent-color) !important;
+}
+.navbar .navbar-brand,
+.navbar .text-reset,
+.navbar .dropdown-toggle {
+  color: #fff !important;
+}
+.navbar .bi {
+  color: #fff;
+}
+
+/* Logo dimensionado */
+#logo-porto {
+  width: 120px;
+  height: auto;
+}
+
+/* Avatar do header */
+.header-avatar {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+  background-color: #ddd;
+}
+
+/* Offcanvas custom (largura da sidebar) */
+.offcanvas-side {
+  width: 240px !important;
+}
+
+/* Sidebar fixa em telas >= lg */
+.sidebar-fixed {
+  position: fixed;
+  top: 56px; /* altura da navbar Bootstrap 5 */
+  left: 0;
+  width: 240px;
+  bottom: 0;
+  overflow-y: auto;
+  background: #fff;
+  border-right: 1px solid #ddd;
+}
+
+/* Links da sidebar com cantos arredondados */
+.sidebar-fixed .list-group-item {
+  border-radius: 8px;
+  margin-bottom: 6px;
+  border: none;
+}
+.sidebar-fixed .list-group-item.active {
+  background-color: var(--accent-color);
+  color: #fff;
+}
+.sidebar-fixed .list-group-item:hover {
+  background-color: #ffa366;
+  color: #fff;
+}
+
+/* Responsividade do main */
+@media (min-width: 992px) {
+  main {
+    margin-left: 240px;
+    margin-top: 56px;
+    padding: 20px;
+  }
+}
+@media (max-width: 991.98px) {
+  main {
+    margin-top: 56px;
+    margin-left: 0;
+    padding: 20px;
+  }
+}
+
+/* Botão principal cor #ff6600 */
+.btn-esmad {
+  background-color: var(--accent-color);
+  color: #fff;
+  border: none;
+}
+.btn-esmad:hover {
+  background-color: #e65c00;
+  color: #fff;
+}
+
+/* Avatar fixo 150x150 para o perfil */
+.fixed-avatar {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  background-color: #ddd;
+}

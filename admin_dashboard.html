@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <meta name="author" content="Antonio Amorim (40240119), Gabriel Paiva (40240137), Henrique Reis (40240132)">
+  <meta name="keywords" content="ESMAD, TSIW, Ensino Superior, DOMUS, TW">
+  <link rel="icon" type="image/x-icon" href="/img/favicon.ico" />
+
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <!-- Bootstrap Icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+  />
+  <!-- Stylesheet principal -->
+  <link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#sidebarOffcanvas"
+      >
+        <i class="bi bi-justify"></i>
+      </button>
+      <a class="navbar-brand ms-2" href="#">ESMAD - Admin</a>
+      <div class="d-flex">
+        <button
+          class="btn btn-sm btn-light"
+          onclick="clearLoggedUser();location.href='index.html'"
+        >
+          Sair
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Offcanvas para ecrãs < lg -->
+  <div
+    class="offcanvas offcanvas-start d-lg-none offcanvas-side"
+    tabindex="-1"
+    id="sidebarOffcanvas"
+  >
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title">Menu Admin</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+      <div class="list-group">
+        <a
+          href="admin_dashboard.html"
+          class="list-group-item list-group-item-action active"
+        >
+          <i class="bi bi-speedometer2 me-2"></i>Dashboard
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sidebar fixa em ecrãs >= lg -->
+  <div class="sidebar-fixed d-none d-lg-block">
+    <div class="mx-3 mt-4">
+      <div class="list-group">
+        <a
+          href="admin_dashboard.html"
+          class="list-group-item list-group-item-action active"
+        >
+          <i class="bi bi-speedometer2 me-2"></i>Dashboard
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <div class="container mt-3">
+      <h2>Painel do Administrador</h2>
+
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="card p-3">
+            <h5>Aprovar Professores</h5>
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nome</th>
+                  <th>Email</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="pendingTeachersTbody"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card p-3 mb-3">
+            <h5>Gerir Cursos</h5>
+            <div class="input-group mb-2">
+              <input
+                type="text"
+                class="form-control"
+                id="newCourseInput"
+                placeholder="Novo curso..."
+              />
+              <button class="btn btn-esmad" onclick="addCourse()">+</button>
+            </div>
+            <ul class="list-group" id="coursesList"></ul>
+          </div>
+
+          <div class="card p-3">
+            <h5>Gerir Disciplinas</h5>
+            <div class="input-group mb-2">
+              <input
+                type="text"
+                class="form-control"
+                id="newSubjectInput"
+                placeholder="Nova disciplina..."
+              />
+              <button class="btn btn-esmad" onclick="addSubject()">+</button>
+            </div>
+            <ul class="list-group" id="subjectsList"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Bootstrap -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+  ></script>
+  <script src="js/script.js"></script>
+  <script>
+    (function(){
+      const user = getLoggedUser();
+      if (user.role !== 'admin') {
+        alert('Acesso negado, precisa ser admin.');
+        location.href = 'index.html';
+        return;
+      }
+      renderPendingTeachers();
+      renderCourses();
+      renderSubjects();
+    })();
+
+    function renderPendingTeachers() {
+      const all = readAllTeachers().filter(t => !t.approved);
+      const tb = document.getElementById('pendingTeachersTbody');
+      tb.innerHTML = '';
+      all.forEach(t => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${t.id}</td>
+          <td>${t.name}</td>
+          <td>${t.email}</td>
+          <td>
+            <button class="btn btn-sm btn-success" onclick="approveT(${t.id})">Aprovar</button>
+          </td>
+        `;
+        tb.appendChild(tr);
+      });
+    }
+    window.approveT = function(id) {
+      approveTeacher(id);
+      renderPendingTeachers();
+      alert('Professor aprovado!');
+    };
+
+    function renderCourses() {
+      const arr = getCoursesList();
+      const ul = document.getElementById('coursesList');
+      ul.innerHTML = '';
+      arr.forEach((c, idx) => {
+        const li = document.createElement('li');
+        li.className = 'list-group-item d-flex justify-content-between align-items-center';
+        li.textContent = c;
+        const btnDel = document.createElement('button');
+        btnDel.className = 'btn btn-sm btn-danger';
+        btnDel.textContent = 'X';
+        btnDel.onclick = () => {
+          arr.splice(idx, 1);
+          saveData(COURSES_KEY, arr);
+          renderCourses();
+        };
+        li.appendChild(btnDel);
+        ul.appendChild(li);
+      });
+    }
+    function addCourse() {
+      const inp = document.getElementById('newCourseInput');
+      const val = inp.value.trim();
+      if (!val) return;
+      const arr = getCoursesList();
+      arr.push(val);
+      saveData(COURSES_KEY, arr);
+      inp.value = '';
+      renderCourses();
+    }
+
+    function renderSubjects() {
+      const arr = getSubjectsList();
+      const ul = document.getElementById('subjectsList');
+      ul.innerHTML = '';
+      arr.forEach((s, idx) => {
+        const li = document.createElement('li');
+        li.className = 'list-group-item d-flex justify-content-between align-items-center';
+        li.textContent = s;
+        const btnDel = document.createElement('button');
+        btnDel.className = 'btn btn-sm btn-danger';
+        btnDel.textContent = 'X';
+        btnDel.onclick = () => {
+          arr.splice(idx, 1);
+          saveData(SUBJECTS_KEY, arr);
+          renderSubjects();
+        };
+        li.appendChild(btnDel);
+        ul.appendChild(li);
+      });
+    }
+    function addSubject() {
+      const inp = document.getElementById('newSubjectInput');
+      const val = inp.value.trim();
+      if (!val) return;
+      const arr = getSubjectsList();
+      arr.push(val);
+      saveData(SUBJECTS_KEY, arr);
+      inp.value = '';
+      renderSubjects();
+    }
+  </script>
+</body>
+</html>
